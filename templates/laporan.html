@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Laporan Inventaris</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="card">
+
+    <h1>📄 Laporan Inventaris</h1>
+
+    <button onclick="window.print()" class="print-btn">
+        Cetak Laporan
+    </button>
+
+    <br><br>
+
+    <a href="/" class="edit">
+        Kembali ke Dashboard
+    </a>
+<h2>Data Inventaris</h2>
+
+<table>
+
+    <tr>
+        <th>ID</th>
+        <th>Nama Alat</th>
+        <th>Kategori</th>
+        <th>Jumlah</th>
+        <th>Kondisi</th>
+        <th>Tanggal Input</th>
+    </tr>
+
+    {% for item in data %}
+
+    <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.nama_alat }}</td>
+        <td>{{ item.kategori }}</td>
+        <td>{{ item.jumlah }}</td>
+        <td>{{ item.kondisi }}</td>
+        <td>{{ item.tanggal_wib }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+</div>
+
+</body>
+</html>

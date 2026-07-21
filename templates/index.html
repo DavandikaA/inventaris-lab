@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Inventaris Laboratorium</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<script>
+function updateWaktu() {
+
+    const sekarang = new Date();
+
+    const tanggal = sekarang.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    const jam = sekarang.toLocaleTimeString('id-ID');
+
+    document.getElementById("tanggal").innerHTML = tanggal;
+    document.getElementById("jam").innerHTML = jam;
+}
+
+setInterval(updateWaktu, 1000);
+updateWaktu();
+</script>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <h2>🔬 Inventaris Lab</h2>
+
+        <a href="/">📊 Dashboard</a>
+        <a href="/">📦 Inventaris</a>
+        <a href="/laporan">📄 Laporan</a>
+        <a href="/tentang">👤 Tentang</a>
+        <a href="/logout">🚪 Logout</a>
+
+    </div>
+
+    <!-- KONTEN -->
+    <div class="main-content">
+
+        <nav class="navbar">
+            <h2>🔬 Sistem Inventaris Laboratorium</h2>
+
+            <a href="/logout" class="logout-btn">
+                Logout
+            </a>
+        </nav>
+
+        <div class="dashboard-grid">
+
+            <div class="stat-card">
+                <h3>📦 Total Data</h3>
+                <p>{{ total_data }}</p>
+            </div>
+
+            <div class="stat-card baik-card">
+                <h3>🟢 Barang Baik</h3>
+                <p>{{ jumlah_baik }}</p>
+            </div>
+
+            <div class="stat-card rusak-card">
+                <h3>🔴 Barang Rusak</h3>
+                <p>{{ jumlah_rusak }}</p>
+            </div>
+
+        </div>
+
+        <div class="container">
+
+            <div class="datetime">
+                <span id="tanggal"></span>
+                <br>
+                <span id="jam"></span>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <form method="POST">
+
+                <input
+                    type="text"
+                    name="nama_alat"
+                    placeholder="Nama Alat"
+                    required
+                >
+
+                <input
+                    type="text"
+                    name="kategori"
+                    placeholder="Kategori"
+                    required
+                >
+
+                <input
+                    type="number"
+                    name="jumlah"
+                    placeholder="Jumlah"
+                    required
+                >
+
+                <input
+                    type="text"
+                    name="kondisi"
+                    placeholder="Kondisi"
+                    required
+                >
+
+                <button type="submit">
+                    Simpan
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Daftar Inventaris</h2>
+
+            <table>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Nama Alat</th>
+                    <th>Kategori</th>
+                    <th>Jumlah</th>
+                    <th>Kondisi</th>
+                    <th>Tanggal Input</th>
+                    <th>Aksi</th>
+                </tr>
+
+                {% for item in data %}
+
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.nama_alat }}</td>
+                    <td>{{ item.kategori }}</td>
+                    <td>{{ item.jumlah }}</td>
+                    <td>{{ item.kondisi }}</td>
+                    <td>{{ item.tanggal_wib }}</td>
+
+                    <td>
+                        <a href="/edit/{{ item.id }}" class="edit">
+                            Edit
+                        </a>
+
+                        <a href="/hapus/{{ item.id }}"
+                           class="hapus"
+                           onclick="return confirm('Yakin ingin menghapus data ini?')">
+                            Hapus
+                        </a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+        <div class="card">
+
+            <form method="GET">
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Cari nama alat..."
+                    value="{{ search }}"
+                >
+
+                <button type="submit">
+                    Cari
+                </button>
+
+                <a href="/" class="edit">
+                    Reset
+                </a>
+
+            </form>
+
+            <br>
+
+            <button onclick="window.print()" class="print-btn">
+                📄 Cetak Laporan
+            </button>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

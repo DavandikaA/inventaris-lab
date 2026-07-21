@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Inventaris</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Edit Data Inventaris</h1>
+
+    <div class="card">
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="nama_alat"
+                value="{{ item.nama_alat }}"
+                required
+            >
+
+            <input
+                type="text"
+                name="kategori"
+                value="{{ item.kategori }}"
+                required
+            >
+
+            <input
+                type="number"
+                name="jumlah"
+                value="{{ item.jumlah }}"
+                required
+            >
+
+            <input
+                type="text"
+                name="kondisi"
+                value="{{ item.kondisi }}"
+                required
+            >
+
+            <button type="submit">
+                Simpan Perubahan
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
